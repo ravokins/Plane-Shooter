@@ -39,11 +39,8 @@ public class PlayerMovement : MonoBehaviour
     {  // For Horizontal & Vertical Movement:
         float HorizontalInput = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float VerticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime; // This is for vertical movement: 
-        float newXpos = Mathf.Clamp( transform.position.x + HorizontalInput,min_X,max_X);
-        Debug.Log("new x pos"+newXpos);
-        
+        float newXpos = Mathf.Clamp( transform.position.x + HorizontalInput,min_X,max_X);       
         float newYpos =Mathf.Clamp( transform.position.y + VerticalInput,min_Y,max_Y);
-        Debug.Log("new y pos"+newYpos);
         transform.position = new Vector2(newXpos, newYpos);
 
         // for vrtical movement:

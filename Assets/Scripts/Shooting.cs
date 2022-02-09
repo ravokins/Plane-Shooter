@@ -21,6 +21,7 @@ public class Shooting : MonoBehaviour
         
        
     }
+    //Spowning bullet using Instantiate:
     void FireInstanciate()
     {
 
