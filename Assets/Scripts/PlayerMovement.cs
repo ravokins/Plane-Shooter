@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D body;
-   private float speed=3000f;
-    
+
+    float speed = 10f;
+
     // Start is called before the first frame update
 
-    private void Awake()
-    {
-        body = GetComponent<Rigidbody2D>();
-    }
     void Start()
     {
-        
-       
+
+
     }
 
     // Update is called once per frame
@@ -27,8 +23,10 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {  // For Horizontal & Vertical Movement:
         float HorizontalInput = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        float VerticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime; // This is for vertical movement:
-        body.velocity = new Vector2(HorizontalInput, VerticalInput);
+        float VerticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime; // This is for vertical movement: 
+        float newXpos = transform.position.x + HorizontalInput;
+        float newYpos = transform.position.y + VerticalInput;
+        transform.position = new Vector2(newXpos, newYpos);
 
         // for vrtical movement:
         //float VerticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime;
