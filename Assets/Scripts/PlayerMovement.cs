@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+   
     float speed = 10f;
     float Padding = 0.8f;
     float min_X;
@@ -13,10 +13,10 @@ public class PlayerMovement : MonoBehaviour
     float max_Y;
 
     // Start is called before the first frame update
-
+   
     void Start()
     {
-
+        FindBoundaries();
 
     }
 
@@ -24,10 +24,11 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Movement();
-        FindBoundaries();
+        
     }
     void FindBoundaries()
-    {
+    {  // adding clamping in x and y axis to make player stay in sceen:
+
         Camera gameCamera = Camera.main;
         min_X = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x+Padding;
         max_X = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x-Padding;
@@ -39,7 +40,10 @@ public class PlayerMovement : MonoBehaviour
         float HorizontalInput = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float VerticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime; // This is for vertical movement: 
         float newXpos = Mathf.Clamp( transform.position.x + HorizontalInput,min_X,max_X);
+        Debug.Log("new x pos"+newXpos);
+        
         float newYpos =Mathf.Clamp( transform.position.y + VerticalInput,min_Y,max_Y);
+        Debug.Log("new y pos"+newYpos);
         transform.position = new Vector2(newXpos, newYpos);
 
         // for vrtical movement:
