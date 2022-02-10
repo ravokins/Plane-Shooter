@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
    
     float speed = 10f;
     float Padding = 0.8f;
+    public GameObject Particalblastpref;
     float min_X;
     float max_X;
     float min_Y;
@@ -46,5 +47,15 @@ public class PlayerMovement : MonoBehaviour
         // for vrtical movement:
         //float VerticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         //body.velocity = new Vector2(body.velocity.y, VerticalInput);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    { 
+        if ( collision.gameObject.tag==("Enemy Bullet"))
+        {
+            Destroy(gameObject);
+            GameObject playerdeadeffect =Instantiate(Particalblastpref, transform.position, Quaternion.identity);
+            Destroy(playerdeadeffect, 0.2f);
+        }
+        
     }
 }
