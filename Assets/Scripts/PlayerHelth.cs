@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
-public class BGScripts : MonoBehaviour
+public class PlayerHelth : MonoBehaviour
 {
-    public Renderer rend;
-    public float speed;
+    public Image bar;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +15,10 @@ public class BGScripts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rend.material.mainTextureOffset += new Vector2(0f, speed * Time.deltaTime);
         
+    }
+    public void SetAmount(float amount)
+    {
+        bar.fillAmount = amount;
     }
 }

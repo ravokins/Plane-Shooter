@@ -7,7 +7,11 @@ public class PlayerMovement : MonoBehaviour
    
     float speed = 10f;
     float Padding = 0.8f;
+    public PlayerHelth playerHelth;
     public GameObject Particalblastpref;
+    public float Health= 20f;
+    float Barsize = 1f;
+    float Damage = 0;
     float min_X;
     float max_X;
     float min_Y;
@@ -18,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         FindBoundaries();
+        Damage = Barsize / Health;
 
     }
 
@@ -52,10 +57,25 @@ public class PlayerMovement : MonoBehaviour
     { 
         if ( collision.gameObject.tag==("Enemy Bullet"))
         {
-            Destroy(gameObject);
-            GameObject playerdeadeffect =Instantiate(Particalblastpref, transform.position, Quaternion.identity);
-            Destroy(playerdeadeffect, 0.2f);
+            playerHealthBar();
+            Destroy(collision.gameObject);
+            if (Health <= 0)
+            {
+                Destroy(gameObject);
+                GameObject playerdeadeffect = Instantiate(Particalblastpref, transform.position, Quaternion.identity);
+                Destroy(playerdeadeffect, 0.2f);
+            }
+            
         }
         
+    }
+    void playerHealthBar()
+    {
+        if(Health > 0)
+        {
+            Health -= 1;
+            Barsize = Health - Damage;
+            playerHelth.SetAmount(Barsize);
+        }
     }
 }
