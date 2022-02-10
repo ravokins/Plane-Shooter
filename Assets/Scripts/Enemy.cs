@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 { public GameObject EnemyBullet;
     public GameObject EnemyFlash;
+    public GameObject EnemyDeadExplosionPrefab;
     public Transform EnemyGunpoint1;
     public Transform EnemyGunpoint2;
     public float EnemyBulletSponTime = 0.5f;
@@ -18,27 +19,44 @@ public class Enemy : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { // this is used for making enemy move downward.
         transform.Translate(Vector2.down * speed * Time.deltaTime) ;
     }
+    
     void EnemyFire()
-    {
+    {  // thiss is used for spown bullet from enemy using Instantiate:
         Instantiate(EnemyBullet, EnemyGunpoint1.position, Quaternion.identity);
         Instantiate(EnemyBullet, EnemyGunpoint2.position, Quaternion.identity);
     }
+    // IEnumerator is a function which call any function directly: in this case we are ussing this for spoWning enemyfire withouth pressing any button.
     IEnumerator EnemyShooting()
     {
        
         while (true)
-        {
+        { // this is used to say enmy fire have to wait before shooting:
             yield return new WaitForSeconds(EnemyBulletSponTime);
             EnemyFire();
+            // this enemyflas.setactive is ued foe showing flash while fire.
             EnemyFlash.SetActive(true);
+            // this is used bczz enemy flah wait for a moment and then again showing flash with enemy firing
             yield return new WaitForSeconds(EnemyBulletSponTime);
             EnemyFlash.SetActive(false);
 
 
         }
 
+    }
+    // Destroying Enemy using Collision:
+    private void OnTriggerEnter2D(Collider2D collision)
+    { // to check if player bullet colide with enemy.
+        
+        if (collision.tag==("Player Bullet"))
+        {
+            Destroy(gameObject);
+            // this is to spown Enemy Dead explosion and gameobject enemydradexplosion is used there for destroying explosion not explosion prefab:
+            GameObject EnemyDeadExplosin =Instantiate(EnemyDeadExplosionPrefab, transform.position, Quaternion.identity);
+            // this block is used for destroy explosion after few second:
+             Destroy(EnemyDeadExplosin, 0.2f);
+        }
     }
 }
